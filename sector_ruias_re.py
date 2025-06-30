@@ -21,7 +21,7 @@ def mostrar_interfaz_sector(BD_RUIAS1):
         description='RUC:',
         rows=6,
         layout=widgets.Layout(width='400px', height='120px'),
-        style={'description_width': '50px'}
+        style={'description_width': '150px'}
     )
 
     def actualizar_ruc(change):
@@ -48,7 +48,7 @@ def mostrar_interfaz_sector(BD_RUIAS1):
         description='Unidad Fiscalizable',
         rows=6,
         layout=widgets.Layout(width='400px', height='120px'),
-        style={'description_width': '50px'}
+        style={'description_width': '150px'}
     )
 
     def actualizar_uf(change):
@@ -73,7 +73,7 @@ def mostrar_interfaz_sector(BD_RUIAS1):
         description='Departamento:',
         rows=6,
         slayout=widgets.Layout(width='400px', height='120px'),
-        style={'description_width': '50px'}
+        style={'description_width': '150px'}
     )
 
     def actualizar_dpto(change):
@@ -188,6 +188,7 @@ def mostrar_interfaz_sector(BD_RUIAS1):
         widgets.HBox([ruc_input, ruc_select]),
         widgets.HBox([uf_input, uf_select]),
         widgets.HBox([dpto_input, dpto_select]),
+        widgets.HTML('<h4 style="color:#144AA7;">Fecha de emisión de la resolución de responsabilidad administrativa</h4>'),
         widgets.HBox([fecha_inicio, fecha_fin]),
         boton_descarga,
         output_descarga
