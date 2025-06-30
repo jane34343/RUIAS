@@ -70,7 +70,7 @@ def mostrar_interfaz_sector(BD_RUIAS1):
     )
     dpto_select = widgets.SelectMultiple(
         options=sorted(BD_RUIAS1['DPTO'].dropna().unique().tolist()),
-        description='DPTO:',
+        description='Departamento:',
         rows=6,
         slayout=widgets.Layout(width='400px', height='120px'),
         style={'description_width': '50px'}
