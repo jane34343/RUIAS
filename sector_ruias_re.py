@@ -72,7 +72,7 @@ def mostrar_interfaz_sector(BD_RUIAS1):
         options=sorted(BD_RUIAS1['DPTO'].dropna().unique().tolist()),
         description='Departamento:',
         rows=6,
-        slayout=widgets.Layout(width='400px', height='120px'),
+        slayout=widgets.Layout(width='500px', height='120px'),
         style={'description_width': '150px'}
     )
 
