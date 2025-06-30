@@ -32,7 +32,7 @@ def mostrar_interfaz_sector(BD_RUIAS1):
 
     # Filtro por UF
     uf_input = widgets.Text(
-        placeholder='Buscar UF...',
+        placeholder='Buscar Unidad Fiscalizable',
         description='Unidad Fiscalizable:',
         layout=widgets.Layout(width='300px'),
         style={'description_width': '150px'}
@@ -40,7 +40,7 @@ def mostrar_interfaz_sector(BD_RUIAS1):
     
     uf_select = widgets.SelectMultiple(
         options=sorted(BD_RUIAS1['UF'].dropna().unique().tolist()),
-        description='UF:',
+        description='Unidad Fiscalizable',
         rows=6,
         layout=widgets.Layout(width='400px', height='120px'),
         style={'description_width': '50px'}
