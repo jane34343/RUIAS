@@ -31,12 +31,19 @@ def mostrar_interfaz_sector(BD_RUIAS1):
     ruc_input.observe(actualizar_ruc, names='value')
 
     # Filtro por UF
-    uf_input = widgets.Text(placeholder='Buscar UF...', description='Unidad Fiscalizable:')
+    uf_input = widgets.Text(
+        placeholder='Buscar UF...',
+        description='Unidad Fiscalizable:',
+        layout=widgets.Layout(width='300px'),
+        style={'description_width': '150px'}
+    )
+    
     uf_select = widgets.SelectMultiple(
         options=sorted(BD_RUIAS1['UF'].dropna().unique().tolist()),
         description='UF:',
         rows=6,
-        style={'description_width': 'initial'}
+        layout=widgets.Layout(width='400px', height='120px'),
+        style={'description_width': '50px'}
     )
 
     def actualizar_uf(change):
