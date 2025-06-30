@@ -135,12 +135,13 @@ def mostrar_interfaz_uf(BD_RUIAS1):
         ).reset_index()
 
         with output_tabla:
-            display(HTML("<h3>Tabla resumen</h3>"))
+            display(HTML('<h3 style="color:#EF7911;">Tabla resumen</h3>'))
             display(resumen)
 
     # --- Interfaz completa ---
     filtros = widgets.VBox([
-        widgets.HTML("<h2>📊 Tabla resumen por Unidad Fiscalizable </h2>"),
+        widgets.HTML('<h2 style="color:#EF7911;">📊 Tabla resumen de multas por unidad fiscalizable</h2>'),
+        widgets.HTML('<h3 style="color:#EF7911;">Filtros</h3>'),
         widgets.HBox([ruc_input, ruc_select]),
         widgets.HBox([uf_input, uf_select]),
         widgets.HBox([dpto_input, dpto_select]),
