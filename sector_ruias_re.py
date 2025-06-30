@@ -11,12 +11,17 @@ def mostrar_interfaz_sector(BD_RUIAS1):
     filtro_actual = pd.DataFrame()
 
     # Filtro por RUC
-    ruc_input = widgets.Text(placeholder='Buscar RUC...', description='Buscar RUC:')
+    ruc_input = widgets.Text(placeholder='Buscar RUC...',
+                             description='Buscar RUC:',
+                             layout=widgets.Layout(width='300px'),
+                            style={'description_width': '150px'}
+    )
     ruc_select = widgets.SelectMultiple(
         options=sorted(BD_RUIAS1['NUM_DOC'].dropna().unique().tolist()),
         description='RUC:',
         rows=6,
-        style={'description_width': 'initial'}
+        layout=widgets.Layout(width='400px', height='120px'),
+        style={'description_width': '50px'}
     )
 
     def actualizar_ruc(change):
@@ -58,12 +63,17 @@ def mostrar_interfaz_sector(BD_RUIAS1):
     uf_input.observe(actualizar_uf, names='value')
 
     # Filtro por Departamento
-    dpto_input = widgets.Text(placeholder='Buscar Departamento...', description='Departamento:')
+    dpto_input = widgets.Text(placeholder='Buscar Departamento...', 
+                              description='Departamento:',
+                              layout=widgets.Layout(width='300px'),
+                              style={'description_width': '150px'}
+    )
     dpto_select = widgets.SelectMultiple(
         options=sorted(BD_RUIAS1['DPTO'].dropna().unique().tolist()),
         description='DPTO:',
         rows=6,
-        style={'description_width': 'initial'}
+        slayout=widgets.Layout(width='400px', height='120px'),
+        style={'description_width': '50px'}
     )
 
     def actualizar_dpto(change):
@@ -146,7 +156,7 @@ def mostrar_interfaz_sector(BD_RUIAS1):
         ).reset_index()
 
         with output_tabla:
-          display(HTML('<h3 style="color:#144AA7;">Tabla resumen</h3>'))
+          
 
           estilo_tabla = """
           <style>
