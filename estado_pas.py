@@ -157,15 +157,16 @@ def mostrar_interfaz(BD_PAS):
         ).reset_index()
 
         with output_tabla:
-            display(HTML("<h3>Tabla resumen</h3>"))
+            display(HTML('<h3 style="color:#E83670;">Tabla resumen</h3>'))
             display(resumen)
 
     filtros = widgets.VBox([
-        widgets.HTML("<h2>📊 Tabla resumen por Administrado </h2>"),
+        widgets.HTML('<h2 style="color:#E83670;">📊 Tabla resumen por administrado</h2>'),
+        widgets.HTML('<h3 style="color:#E83670;"> Filtros  </h3>'),
         widgets.HBox([ruc_input, ruc_select]),
         widgets.HBox([uf_input, uf_select]),
         widgets.HBox([dpto_input, dpto_select]),
-        widgets.HTML("<h3> La fecha corresponde al inicio de supervisión </h3>"),
+        widgets.HTML('<h3 style="color:#E83670;"> La fecha corresponde al inicio de supervisión </h3>'),
         widgets.HBox([fecha_inicio, fecha_fin]),
         boton_descarga,
         output_descarga
