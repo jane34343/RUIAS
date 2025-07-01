@@ -15,14 +15,14 @@ def mostrar_interfaz_sector(BD_RUIAS1):
         placeholder='Buscar RUC...',
         description='Buscar RUC:',
         layout=widgets.Layout(width='300px'),
-        style={'description_width': '150px'}
+        style={'description_width': '250px'}
     )
     ruc_select = widgets.SelectMultiple(
         options=sorted(BD_RUIAS1['NUM_DOC'].dropna().unique().tolist()),
-        description='RUC:',
+        description='Seleccionar RUC:',
         rows=5,
-        layout=widgets.Layout(width='400px', height='120px'),
-        style={'description_width': '150px'}
+        layout=widgets.Layout(width='600px', height='120px'),
+        style={'description_width': '250px'}
     )
 
     def actualizar_ruc(change):
@@ -39,17 +39,17 @@ def mostrar_interfaz_sector(BD_RUIAS1):
     # Filtro por UF
     uf_input = widgets.Text(
         placeholder='Buscar Unidad Fiscalizable',
-        description='Unidad Fiscalizable:',
+        description='Buscar:',
         layout=widgets.Layout(width='300px'),
-        style={'description_width': '150px'}
+        style={'description_width': '250px'}
     )
     
     uf_select = widgets.SelectMultiple(
         options=sorted(BD_RUIAS1['UF'].dropna().unique().tolist()),
-        description='Unidad Fiscalizable',
+        description='Seleccionar Unidad Fiscalizable',
         rows=5,
-        layout=widgets.Layout(width='400px', height='120px'),
-        style={'description_width': '150px'}
+        layout=widgets.Layout(width='600px', height='120px'),
+        style={'description_width': '250px'}
     )
 
     def actualizar_uf(change):
@@ -65,16 +65,16 @@ def mostrar_interfaz_sector(BD_RUIAS1):
 
     # Filtro por Departamento
     dpto_input = widgets.Text(placeholder='Buscar Departamento...', 
-            description='Departamento:',
+            description='Buscar:',
             layout=widgets.Layout(width='300px'),
-            style={'description_width': '150px'}
+            style={'description_width': '250px'}
     )
     dpto_select = widgets.SelectMultiple(
         options=sorted(BD_RUIAS1['DPTO'].dropna().unique().tolist()),
-        description='Departamento:',
+        description='Seleccionar Departamento:',
         rows=5,
-        slayout=widgets.Layout(width='400px', height='120px'),
-        style={'description_width': '150px'}
+        slayout=widgets.Layout(width='600px', height='120px'),
+        style={'description_width': '250px'}
     )
 
     def actualizar_dpto(change):
@@ -186,9 +186,12 @@ def mostrar_interfaz_sector(BD_RUIAS1):
     filtros = widgets.VBox([
         widgets.HTML('<h2 style="color:#144AA7;">📊 Tabla por sector de multas con recurso de reconsideración</h2>'),
         widgets.HTML('<h3 style="color:#144AA7;">Filtros</h3>'),
-        widgets.HBox([ruc_input, ruc_select]),
-        widgets.HBox([uf_input, uf_select]),
-        widgets.HBox([dpto_input, dpto_select]),
+        widgets.HBox([ruc_input]),
+        widgets.HBox([ruc_select]),
+        widgets.HBox([uf_input]),
+        widgets.HBox([uf_select]),
+        widgets.HBox([dpto_input]),
+        widgets.HBox([dpto_select]),
         widgets.HTML('<h4 style="color:#144AA7;">Fecha de emisión de la resolución de responsabilidad administrativa</h4>'),
         widgets.HBox([fecha_inicio, fecha_fin]),
         boton_descarga,
