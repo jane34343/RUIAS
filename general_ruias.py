@@ -174,7 +174,7 @@ def mostrar_interfaz(BD_RUIAS1):
           width: 100%;
       }
       thead {
-          background-color: #1d85bf;
+          background-color: #002060;
           color: white;
       }
       th {
@@ -188,27 +188,27 @@ def mostrar_interfaz(BD_RUIAS1):
       """
 
       with output_tabla:
-          display(HTML('<h3 style="color:#144AA7;">Resumen por Sector</h3>'))
+          display(HTML('<h3 style="color:#002060;">Resumen por Sector</h3>'))
           display(HTML(estilo_tabla + resumen_sect.to_html(index=False)))
 
-          display(HTML('<h3 style="color:#144AA7;">Resumen por Recurso de Reconsideración</h3>'))
+          display(HTML('<h3 style="color:#002060;">Resumen por Recurso de Reconsideración</h3>'))
           display(HTML(estilo_tabla + resumen_rr.to_html(index=False)))
 
-          display(HTML('<h3 style="color:#144AA7;">Resumen por Recurso de Apelación</h3>'))
+          display(HTML('<h3 style="color:#002060;">Resumen por Recurso de Apelación</h3>'))
           display(HTML(estilo_tabla + resumen_rape.to_html(index=False)))
 
 
     # --- Mostrar interfaz completa ---
     filtros = widgets.VBox([
-        widgets.HTML('<h2 style="color:#144AA7;">📊 Tabla por sector de multas con recurso de reconsideración</h2>'),
-        widgets.HTML('<h3 style="color:#144AA7;">Filtros</h3>'),
+        widgets.HTML('<h2 style="color:#002060;">📊 Consulta general de multas </h2>'),
+        widgets.HTML('<h3 style="color:#002060;">Filtros</h3>'),
         widgets.HBox([ruc_input]),
         widgets.HBox([ruc_select]),
         widgets.HBox([uf_input]),
         widgets.HBox([uf_select]),
         widgets.HBox([dpto_input]),
         widgets.HBox([dpto_select]),
-        widgets.HTML('<h4 style="color:#144AA7;">Fecha de emisión de la resolución de responsabilidad administrativa</h4>'),
+        widgets.HTML('<h4 style="color:#002060;">Fecha de emisión de la resolución de responsabilidad administrativa</h4>'),
         widgets.HBox([fecha_inicio, fecha_fin]),
         boton_descarga,
         output_descarga
