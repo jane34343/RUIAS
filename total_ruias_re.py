@@ -191,7 +191,7 @@ def mostrar_interfaz_total(BD_RUIAS1):
 
     # --- Mostrar interfaz completa ---
     filtros = widgets.VBox([
-        widgets.HTML('<h2 style="color:#144AA7;">📊 Tabla resumen general de multas con recurso de reconsideración</h2>'),
+        widgets.HTML('<h2 style="color:#144AA7;">📊 Consulta de multas con recurso de reconsideración</h2>'),
         widgets.HTML('<h3 style="color:#144AA7;">Filtros</h3>'),
         widgets.HBox([ruc_input]),
         widgets.HBox([ruc_select]),
