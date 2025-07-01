@@ -21,7 +21,7 @@ def mostrar_interfaz_sector(BD_RUIAS1):
         options=sorted(BD_RUIAS1['NUM_DOC'].dropna().unique().tolist()),
         description='Seleccionar RUC:',
         rows=5,
-        layout=widgets.Layout(width='600px', height='120px'),
+        layout=widgets.Layout(width='600px', height='110px'),
         style={'description_width': '250px'}
     )
 
@@ -48,7 +48,7 @@ def mostrar_interfaz_sector(BD_RUIAS1):
         options=sorted(BD_RUIAS1['UF'].dropna().unique().tolist()),
         description='Seleccionar Unidad Fiscalizable',
         rows=5,
-        layout=widgets.Layout(width='600px', height='120px'),
+        layout=widgets.Layout(width='600px', height='110px'),
         style={'description_width': '250px'}
     )
 
@@ -74,7 +74,7 @@ def mostrar_interfaz_sector(BD_RUIAS1):
         options=sorted(BD_RUIAS1['DPTO'].dropna().unique().tolist()),
         description='Seleccionar Departamento:',
         rows=5,
-        layout=widgets.Layout(width='600px', height='120px'),
+        layout=widgets.Layout(width='600px', height='110px'),
         style={'description_width': '250px'}
     )
 
