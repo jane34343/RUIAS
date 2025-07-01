@@ -152,8 +152,8 @@ def mostrar_interfaz_total(BD_RUIAS1):
         filtro_actual = df.copy()
 
         resumen = pd.DataFrame({
-            'Conteo_de_Expedientes': [df['NUM_EXP'].nunique()],
-            'Suma_de_multas': [df['MULT_FIN_WEB'].sum()]
+            'Expedientes': [df['NUM_EXP'].nunique()],
+            'Multas': [df['MULT_FIN_WEB'].sum()]
         })
         resumen_sect = df.groupby('SECT').agg(
           Expedientes=('NUM_EXP', 'nunique'),
