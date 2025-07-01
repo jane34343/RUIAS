@@ -11,12 +11,18 @@ def mostrar_interfaz_total(BD_RUIAS1):
     filtro_actual = pd.DataFrame()
 
     # --- Filtro múltiple por RUC ---
-    ruc_input = widgets.Text(placeholder='Buscar RUC...', description='Buscar RUC:')
+    ruc_input = widgets.Text(
+        placeholder='Buscar RUC...', 
+        description='Buscar RUC:',
+        layout=widgets.Layout(width='600px'),
+        style={'description_width': '250px'}
+    )
     ruc_select = widgets.SelectMultiple(
         options=sorted(BD_RUIAS1['NUM_DOC'].dropna().unique().tolist()),
-        description='RUC:',
-        rows=6,
-        style={'description_width': 'initial'}
+        description='Seleccionar RUC:',
+        rows=5,
+        layout=widgets.Layout(width='600px', height='110px'),
+        style={'description_width': '250px'}
     )
 
     def actualizar_ruc(change):
@@ -31,12 +37,18 @@ def mostrar_interfaz_total(BD_RUIAS1):
     ruc_input.observe(actualizar_ruc, names='value')
 
     # --- Filtro múltiple por UF ---
-    uf_input = widgets.Text(placeholder='Buscar UF...', description='Unidad Fiscalizable:')
+    uf_input = widgets.Text(
+        placeholder='Buscar Unidad Fiscalizable', 
+        description='Buscar:',
+        layout=widgets.Layout(width='600px'),
+        style={'description_width': '250px'}
+    )
     uf_select = widgets.SelectMultiple(
         options=sorted(BD_RUIAS1['UF'].dropna().unique().tolist()),
-        description='UF:',
-        rows=6,
-        style={'description_width': 'initial'}
+        description='Seleccionar Unidad Fiscalizable',
+        rows=5,
+        layout=widgets.Layout(width='600px', height='110px'),
+        style={'description_width': '250px'}
     )
 
     def actualizar_uf(change):
@@ -51,12 +63,18 @@ def mostrar_interfaz_total(BD_RUIAS1):
     uf_input.observe(actualizar_uf, names='value')
 
     # --- Filtro múltiple por DPTO ---
-    dpto_input = widgets.Text(placeholder='Buscar Departamento...', description='Departamento:')
+    dpto_input = widgets.Text(
+        placeholder='Buscar Departamento...', 
+        description='Buscar:',
+        layout=widgets.Layout(width='600px'),
+        style={'description_width': '250px'}
+    )
     dpto_select = widgets.SelectMultiple(
         options=sorted(BD_RUIAS1['DPTO'].dropna().unique().tolist()),
-        description='DPTO:',
-        rows=6,
-        style={'description_width': 'initial'}
+        description='Seleccionar Departamento:',
+        rows=5,
+        layout=widgets.Layout(width='600px', height='110px'),
+        style={'description_width': '250px'}
     )
 
     def actualizar_dpto(change):
@@ -137,9 +155,13 @@ def mostrar_interfaz_total(BD_RUIAS1):
             'Conteo_de_Expedientes': [df['NUM_EXP'].nunique()],
             'Suma_de_multas': [df['MULT_FIN_WEB'].sum()]
         })
+        resumen_sect = df.groupby('SECT').agg(
+          Expedientes=('NUM_EXP', 'nunique'),
+          Multas=('MULT_FIN_WEB', 'sum')
+        ).reset_index().rename(columns={'SECT': 'Sector'})
 
         with output_tabla:
-          display(HTML('<h3 style="color:#0BC7E0;">Tabla resumen</h3>'))
+          display(HTML('<h3 style="color:#0BC7E0;">Total de multas con apelación</h3>'))
 
           estilo_tabla = """
           <style>
@@ -162,15 +184,21 @@ def mostrar_interfaz_total(BD_RUIAS1):
           """
           tabla_html = resumen.to_html(index=False)
           display(HTML(estilo_tabla + tabla_html))
+          display(HTML('<h3 style="color:#0BC7E0;">Resumen por Sector</h3>'))
+          display(HTML(estilo_tabla + resumen_sect.to_html(index=False)))
 
 
     # --- Mostrar interfaz completa ---
     filtros = widgets.VBox([
-        widgets.HTML('<h2 style="color:#0BC7E0;">📊 Tabla resumen general de multas con apelación</h2>'),
+        widgets.HTML('<h2 style="color:#0BC7E0;">📊 Consulta de multas con apelación</h2>'),
         widgets.HTML('<h3 style="color:#0BC7E0;">Filtros</h3>'),
-        widgets.HBox([ruc_input, ruc_select]),
-        widgets.HBox([uf_input, uf_select]),
-        widgets.HBox([dpto_input, dpto_select]),
+        widgets.HBox([ruc_input]),
+        widgets.HBox([ruc_select]),
+        widgets.HBox([uf_input]),
+        widgets.HBox([uf_select]),
+        widgets.HBox([dpto_input]),
+        widgets.HBox([dpto_select]),
+        widgets.HTML('<h4 style="color:#0BC7E0;">Fecha de emisión de la resolución de responsabilidad administrativa</h4>'),
         widgets.HBox([fecha_inicio, fecha_fin]),
         boton_descarga,
         output_descarga
