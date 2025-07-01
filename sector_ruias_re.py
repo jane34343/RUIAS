@@ -14,7 +14,7 @@ def mostrar_interfaz_sector(BD_RUIAS1):
     ruc_input = widgets.Text(
         placeholder='Buscar RUC...',
         description='Buscar RUC:',
-        layout=widgets.Layout(width='300px'),
+        layout=widgets.Layout(width='600px'),
         style={'description_width': '250px'}
     )
     ruc_select = widgets.SelectMultiple(
@@ -40,7 +40,7 @@ def mostrar_interfaz_sector(BD_RUIAS1):
     uf_input = widgets.Text(
         placeholder='Buscar Unidad Fiscalizable',
         description='Buscar:',
-        layout=widgets.Layout(width='300px'),
+        layout=widgets.Layout(width='600px'),
         style={'description_width': '250px'}
     )
     
@@ -66,7 +66,7 @@ def mostrar_interfaz_sector(BD_RUIAS1):
     # Filtro por Departamento
     dpto_input = widgets.Text(placeholder='Buscar Departamento...', 
             description='Buscar:',
-            layout=widgets.Layout(width='300px'),
+            layout=widgets.Layout(width='600px'),
             style={'description_width': '250px'}
     )
     dpto_select = widgets.SelectMultiple(
