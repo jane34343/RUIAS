@@ -64,10 +64,11 @@ def mostrar_interfaz_sector(BD_RUIAS1):
     uf_input.observe(actualizar_uf, names='value')
 
     # Filtro por Departamento
-    dpto_input = widgets.Text(placeholder='Buscar Departamento...', 
-            description='Buscar:',
-            layout=widgets.Layout(width='600px'),
-            style={'description_width': '250px'}
+    dpto_input = widgets.Text(
+        placeholder='Buscar Departamento...', 
+        description='Buscar:',
+        layout=widgets.Layout(width='600px'),
+        style={'description_width': '250px'}
     )
     dpto_select = widgets.SelectMultiple(
         options=sorted(BD_RUIAS1['DPTO'].dropna().unique().tolist()),
