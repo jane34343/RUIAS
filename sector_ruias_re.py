@@ -19,7 +19,7 @@ def mostrar_interfaz_sector(BD_RUIAS1):
     ruc_select = widgets.SelectMultiple(
         options=sorted(BD_RUIAS1['NUM_DOC'].dropna().unique().tolist()),
         description='RUC:',
-        rows=6,
+        rows=5,
         layout=widgets.Layout(width='400px', height='120px'),
         style={'description_width': '150px'}
     )
@@ -46,7 +46,7 @@ def mostrar_interfaz_sector(BD_RUIAS1):
     uf_select = widgets.SelectMultiple(
         options=sorted(BD_RUIAS1['UF'].dropna().unique().tolist()),
         description='Unidad Fiscalizable',
-        rows=6,
+        rows=5,
         layout=widgets.Layout(width='400px', height='120px'),
         style={'description_width': '150px'}
     )
@@ -71,7 +71,7 @@ def mostrar_interfaz_sector(BD_RUIAS1):
     dpto_select = widgets.SelectMultiple(
         options=sorted(BD_RUIAS1['DPTO'].dropna().unique().tolist()),
         description='Departamento:',
-        rows=6,
+        rows=5,
         slayout=widgets.Layout(width='500px', height='220px'),
         style={'description_width': '150px'}
     )
