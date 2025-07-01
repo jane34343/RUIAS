@@ -39,7 +39,7 @@ def mostrar_interfaz_total(BD_RUIAS1):
     # --- Filtro múltiple por UF ---
     uf_input = widgets.Text(
         placeholder='Buscar Unidad Fiscalizable', 
-        description='UBuscar:',
+        description='Buscar:',
         layout=widgets.Layout(width='600px'),
         style={'description_width': '250px'}
     )
