@@ -11,10 +11,11 @@ def mostrar_interfaz_sector(BD_RUIAS1):
     filtro_actual = pd.DataFrame()
 
     # Filtro por RUC
-    ruc_input = widgets.Text(placeholder='Buscar RUC...',
-                             description='Buscar RUC:',
-                             layout=widgets.Layout(width='300px'),
-                            style={'description_width': '150px'}
+    ruc_input = widgets.Text(
+        placeholder='Buscar RUC...',
+        description='Buscar RUC:',
+        layout=widgets.Layout(width='300px'),
+        style={'description_width': '150px'}
     )
     ruc_select = widgets.SelectMultiple(
         options=sorted(BD_RUIAS1['NUM_DOC'].dropna().unique().tolist()),
@@ -64,15 +65,15 @@ def mostrar_interfaz_sector(BD_RUIAS1):
 
     # Filtro por Departamento
     dpto_input = widgets.Text(placeholder='Buscar Departamento...', 
-                              description='Departamento:',
-                              layout=widgets.Layout(width='300px'),
-                              style={'description_width': '150px'}
+            description='Departamento:',
+            layout=widgets.Layout(width='300px'),
+            style={'description_width': '150px'}
     )
     dpto_select = widgets.SelectMultiple(
         options=sorted(BD_RUIAS1['DPTO'].dropna().unique().tolist()),
         description='Departamento:',
         rows=5,
-        slayout=widgets.Layout(width='500px', height='220px'),
+        slayout=widgets.Layout(width='400px', height='120px'),
         style={'description_width': '150px'}
     )
 
@@ -151,9 +152,9 @@ def mostrar_interfaz_sector(BD_RUIAS1):
         filtro_actual = df.copy()
 
         resumen = df.groupby('SECT').agg(
-            Conteo_de_Expedientes=('NUM_EXP', 'nunique'),
-            Suma_de_multas=('MULT_FIN_WEB', 'sum')
-        ).reset_index()
+            Expedientes=('NUM_EXP', 'nunique'),
+            Multas=('MULT_FIN_WEB', 'sum')
+        ).reset_index().rename(columns={'SECT': 'Sector'})
 
         with output_tabla:
           
