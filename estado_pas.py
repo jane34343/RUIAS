@@ -41,12 +41,18 @@ def mostrar_interfaz(BD_PAS):
 
     filtro_actual = pd.DataFrame()
 
-    ruc_input = widgets.Text(placeholder='Buscar RUC...', description='Buscar RUC:')
+    ruc_input = widgets.Text(
+        placeholder='Buscar RUC...', 
+        description='Buscar RUC:',
+        layout=widgets.Layout(width='600px'),
+        style={'description_width': '250px'}
+    )
     ruc_select = widgets.SelectMultiple(
         options=sorted(BD_PAS['RUC'].dropna().unique().tolist()),
-        description='RUC:',
-        rows=6,
-        style={'description_width': 'initial'}
+        description='Seleccionar RUC:',
+        rows=5,
+        layout=widgets.Layout(width='600px', height='110px'),
+        style={'description_width': '250px'}
     )
 
     def actualizar_ruc(change):
@@ -60,12 +66,18 @@ def mostrar_interfaz(BD_PAS):
 
     ruc_input.observe(actualizar_ruc, names='value')
 
-    uf_input = widgets.Text(placeholder='Buscar UF...', description='Unidad Fiscalizable:')
+    uf_input = widgets.Text(
+        placeholder='Buscar Unidad Fiscalizable',
+        description='Buscar:',
+        layout=widgets.Layout(width='600px'),
+        style={'description_width': '250px'}
+    )
     uf_select = widgets.SelectMultiple(
         options=sorted(BD_PAS['UNIDAD FISCALIZABLE'].dropna().unique().tolist()),
-        description='UF:',
-        rows=6,
-        style={'description_width': 'initial'}
+        description='Seleccionar Unidad Fiscalizable',
+        rows=5,
+        layout=widgets.Layout(width='600px', height='110px'),
+        style={'description_width': '250px'}
     )
 
     def actualizar_uf(change):
@@ -79,12 +91,18 @@ def mostrar_interfaz(BD_PAS):
 
     uf_input.observe(actualizar_uf, names='value')
 
-    dpto_input = widgets.Text(placeholder='Buscar Departamento...', description='Departamento:')
+    dpto_input = widgets.Text(
+        placeholder='Buscar Departamento...', 
+        description='Buscar:',
+        layout=widgets.Layout(width='600px'),
+        style={'description_width': '250px'}
+    )
     dpto_select = widgets.SelectMultiple(
         options=sorted(BD_PAS['DEPARTAMENTO'].dropna().unique().tolist()),
-        description='Departamento:',
-        rows=6,
-        style={'description_width': 'initial'}
+        description='Seleccionar Departamento:',
+        rows=5,
+        layout=widgets.Layout(width='600px', height='110px'),
+        style={'description_width': '250px'}
     )
 
     def actualizar_dpto(change):
@@ -163,9 +181,12 @@ def mostrar_interfaz(BD_PAS):
     filtros = widgets.VBox([
         widgets.HTML('<h2 style="color:#E83670;">📊 Tabla resumen por administrado</h2>'),
         widgets.HTML('<h3 style="color:#E83670;"> Filtros  </h3>'),
-        widgets.HBox([ruc_input, ruc_select]),
-        widgets.HBox([uf_input, uf_select]),
-        widgets.HBox([dpto_input, dpto_select]),
+        widgets.HBox([ruc_input]),
+        widgets.HBox([ruc_select]),
+        widgets.HBox([uf_input]),
+        widgets.HBox([uf_select]),
+        widgets.HBox([dpto_input]),
+        widgets.HBox([dpto_select]),
         widgets.HTML('<h3 style="color:#E83670;"> La fecha corresponde al inicio de supervisión </h3>'),
         widgets.HBox([fecha_inicio, fecha_fin]),
         boton_descarga,
