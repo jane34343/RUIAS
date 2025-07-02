@@ -154,7 +154,7 @@ def mostrar_interfaz_uf(BD_RUIAS1):
 
         with output_tabla:
             display(
-            resumen.head(20)
+            resumen
             .style
             .hide(axis='index')  # oculta el índice
             .set_table_attributes("style='display:inline-block'")  # presentación
