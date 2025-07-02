@@ -153,7 +153,13 @@ def mostrar_interfaz_uf(BD_RUIAS1):
         ).reset_index().rename(columns={'UF': 'Unidad Fiscalizable'})
 
         with output_tabla:
-            display(resumen)
+            display(
+            resumen.head(20)
+            .style
+            .hide(axis='index')  # oculta el índice
+            .set_table_attributes("style='display:inline-block'")  # presentación
+            .set_caption("Mostrando las primeras 20 filas")
+                    )
 
     # --- Interfaz completa ---
     filtros = widgets.VBox([
