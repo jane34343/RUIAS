@@ -179,7 +179,7 @@ def mostrar_interfaz(BD_RUIAS1):
       }
       th {
           padding: 8px;
-          text-align: left;
+          text-align: center;
       }
       td {
           padding: 6px;
