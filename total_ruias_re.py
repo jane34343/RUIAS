@@ -156,11 +156,14 @@ def mostrar_interfaz_total(BD_RUIAS1):
             'Infracciones': [df['NUM_EXP'].count()],
             'Multas': [df['MULT_FIN_WEB'].sum()]
         })
+        resumen['Multas'] = resumen['Multas'].apply(lambda x: f"{x:,.2f}")
+        
         resumen_sect = df.groupby('SECT').agg(
           Expedientes=('NUM_EXP', 'nunique'),
           Infracciones=('NUM_EXP', 'count'),
           Multas=('MULT_FIN_WEB', 'sum')
         ).reset_index().rename(columns={'SECT': 'Sector'})
+        resumen_sect['Multas'] = resumen_sect['Multas'].apply(lambda x: f"{x:,.2f}")
 
         with output_tabla:
           display(HTML('<h3 style="color:#144AA7;">Total de multas con recurso de reconsideración</h3>'))
