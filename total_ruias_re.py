@@ -153,10 +153,12 @@ def mostrar_interfaz_total(BD_RUIAS1):
 
         resumen = pd.DataFrame({
             'Expedientes': [df['NUM_EXP'].nunique()],
+            'Infracciones': [df['NUM_EXP'].count()],
             'Multas': [df['MULT_FIN_WEB'].sum()]
         })
         resumen_sect = df.groupby('SECT').agg(
           Expedientes=('NUM_EXP', 'nunique'),
+          Infracciones=('NUM_EXP', 'count'),
           Multas=('MULT_FIN_WEB', 'sum')
         ).reset_index().rename(columns={'SECT': 'Sector'})
 
@@ -175,7 +177,7 @@ def mostrar_interfaz_total(BD_RUIAS1):
           }
           th {
               padding: 8px;
-              text-align: left;
+              text-align: right;
           }
           td {
               padding: 6px;
