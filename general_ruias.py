@@ -227,7 +227,7 @@ def mostrar_interfaz(BD_RUIAS1):
     layout=widgets.Layout(
         padding='15px',
         border='solid 1px #ccc',
-        background_color='#EBEBEB',
+        background_color='#B4C6E7',
         width='100%'
         )
     )
