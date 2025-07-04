@@ -202,6 +202,8 @@ def mostrar_interfaz(BD_RUIAS1):
 
           display(HTML('<h3 style="color:#002060;">¿Tiene resolución de apelación?</h3>'))
           display(HTML(estilo_tabla + resumen_rape.to_html(index=False)))
+          display(HTML('<h4 style="color:#002060;">El total de expedientes e infracciones incluye tanto las multas con monto como aquellas que tienen valor de cero.</h4>'))
+          display(HTML('<h4 style="color:#002060;">El total de expedientes incluye todos los registros: públicos, privados y retirados.</h4>'))
 
 
     # --- Mostrar interfaz completa ---
