@@ -222,15 +222,6 @@ def mostrar_interfaz(BD_RUIAS1):
         output_descarga
     ])
     
-    filtros_con_estilo = widgets.Box(
-    [filtros],
-    layout=widgets.Layout(
-        padding='15px',
-        border='solid 5px #ccc',
-        background_color='#B4C6E7',
-        width='80%'
-        )
-    )
     
     interactiva = widgets.interactive_output(update_summary, {
         'ruc': ruc_select,
@@ -240,4 +231,4 @@ def mostrar_interfaz(BD_RUIAS1):
         'fecha_fin_val': fecha_fin
     })
 
-    display(filtros_con_estilo, interactiva, output_tabla)
+    display(filtros, interactiva, output_tabla)
