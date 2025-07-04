@@ -169,7 +169,7 @@ def mostrar_interfaz_uf(BD_RUIAS1):
                   width: 100%;
               }
               thead {
-                  background-color: #44bfb5;
+                  background-color: #EF7911;
                   color: white;
               }
               th {
@@ -183,6 +183,7 @@ def mostrar_interfaz_uf(BD_RUIAS1):
               """
             tabla_html = resumen_d.to_html(index=False)
             display(HTML(estilo_tabla + tabla_html))
+            display(HTML('<h3 style="color:#EF7911;">Resumen por Unidad Fiscalizable</h3>'))
             display(resumen)
 
     # --- Interfaz completa ---
