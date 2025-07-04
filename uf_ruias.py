@@ -163,24 +163,24 @@ def mostrar_interfaz_uf(BD_RUIAS1):
 
         with output_tabla:
            estilo_tabla = """
-              <style>
-              table {
+           <style>
+           table {
                   border-collapse: collapse;
                   width: 100%;
-              }
-              thead {
+            }
+            thead {
                   background-color: #EF7911;
                   color: white;
-              }
-              th {
+            }
+            th {
                   padding: 8px;
                   text-align: right;
-              }
-              td {
+            }
+            td {
                   padding: 6px;
-              }
-              </style>
-              """
+            }
+            </style>
+            """
             tabla_html = resumen_d.to_html(index=False)
             display(HTML(estilo_tabla + tabla_html))
             display(HTML('<h3 style="color:#EF7911;">Resumen por Unidad Fiscalizable</h3>'))
