@@ -164,14 +164,14 @@ def mostrar_interfaz(BD_RUIAS1):
           Infracciones=('NUM_EXP', 'count'),
           Multas=('MULT_FIN_WEB', 'sum')
       ).reset_index().rename(columns={'RR': 'Recurso de Reconsideración'})
-      resumen_rr['Multas'] = resumen_sect['Multas'].apply(lambda x: f"{x:,.2f}")
+      resumen_rr['Multas'] = resumen_rr['Multas'].apply(lambda x: f"{x:,.2f}")
 
       resumen_rape = df.groupby('R_APE').agg(
           Expedientes=('NUM_EXP', 'nunique'),
           Infracciones=('NUM_EXP', 'count'),
           Multas=('MULT_FIN_WEB', 'sum')
       ).reset_index().rename(columns={'R_APE': 'Recurso de Apelación'})
-      resumen_rape['Multas'] = resumen_sect['Multas'].apply(lambda x: f"{x:,.2f}")
+      resumen_rape['Multas'] = resumen_rape['Multas'].apply(lambda x: f"{x:,.2f}")
 
       estilo_tabla = """
       <style>
