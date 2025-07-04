@@ -152,6 +152,7 @@ def mostrar_interfaz_uf(BD_RUIAS1):
             Infracciones=('NUM_EXP', 'count'),
             Multas=('MULT_FIN_WEB', 'sum')
         ).reset_index().rename(columns={'UF': 'Unidad Fiscalizable'})
+        resumen['Multas'] = resumen['Multas'].apply(lambda x: f"{x:,.2f}")
 
         with output_tabla:
             display(resumen)
