@@ -153,12 +153,18 @@ def mostrar_interfaz_total(BD_RUIAS1):
 
         resumen = pd.DataFrame({
             'Expedientes': [df['NUM_EXP'].nunique()],
+            'Infracciones': [df['NUM_EXP'].count()],
             'Multas': [df['MULT_FIN_WEB'].sum()]
         })
+        resumen['Multas'] = resumen['Multas'].apply(lambda x: f"{x:,.2f}")
+
+        
         resumen_sect = df.groupby('SECT').agg(
           Expedientes=('NUM_EXP', 'nunique'),
+          Infracciones=('NUM_EXP', 'count'),
           Multas=('MULT_FIN_WEB', 'sum')
         ).reset_index().rename(columns={'SECT': 'Sector'})
+        resumen_sect['Multas'] = resumen_sect['Multas'].apply(lambda x: f"{x:,.2f}")
 
         with output_tabla:
           display(HTML('<h3 style="color:#0BC7E0;">Total de multas con apelación</h3>'))
@@ -175,7 +181,7 @@ def mostrar_interfaz_total(BD_RUIAS1):
           }
           th {
               padding: 8px;
-              text-align: left;
+              text-align: right;
           }
           td {
               padding: 6px;
@@ -186,6 +192,7 @@ def mostrar_interfaz_total(BD_RUIAS1):
           display(HTML(estilo_tabla + tabla_html))
           display(HTML('<h3 style="color:#0BC7E0;">Resumen por Sector</h3>'))
           display(HTML(estilo_tabla + resumen_sect.to_html(index=False)))
+          display(HTML('<h4 style="color:#0BC7E0;">El total de expedientes incluye únicamente aquellos que están pendientes de apelación y que tienen carácter privado</h4>'))
 
 
     # --- Mostrar interfaz completa ---
