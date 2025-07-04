@@ -149,6 +149,7 @@ def mostrar_interfaz_uf(BD_RUIAS1):
 
         resumen = df.groupby('UF').agg(
             Expedientes=('NUM_EXP', 'nunique'),
+            Infracciones=('NUM_EXP', 'count'),
             Multas=('MULT_FIN_WEB', 'sum')
         ).reset_index().rename(columns={'UF': 'Unidad Fiscalizable'})
 
