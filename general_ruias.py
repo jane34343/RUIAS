@@ -226,9 +226,9 @@ def mostrar_interfaz(BD_RUIAS1):
     [filtros],
     layout=widgets.Layout(
         padding='15px',
-        border='solid 1px #ccc',
+        border='solid 5px #ccc',
         background_color='#B4C6E7',
-        width='100%'
+        width='80%'
         )
     )
     
