@@ -162,22 +162,22 @@ def mostrar_interfaz_uf(BD_RUIAS1):
         resumen['Multas'] = resumen['Multas'].apply(lambda x: f"{x:,.2f}")
 
         with output_tabla:
-           estilo_tabla = """
-           <style>
-           table {
-                  border-collapse: collapse;
-                  width: 100%;
+            estilo_tabla = """
+            <style>
+            table {
+                border-collapse: collapse;
+                width: 100%;
             }
             thead {
-                  background-color: #EF7911;
-                  color: white;
+                background-color: #EF7911;
+                color: white;
             }
             th {
-                  padding: 8px;
-                  text-align: right;
+                padding: 8px;
+                text-align: right;
             }
             td {
-                  padding: 6px;
+                padding: 6px;
             }
             </style>
             """
