@@ -147,6 +147,13 @@ def mostrar_interfaz_uf(BD_RUIAS1):
 
         filtro_actual = df.copy()
 
+        resumen_d = pd.DataFrame({
+            'Expedientes': [df['NUM_EXP'].nunique()],
+            'Infracciones': [df['NUM_EXP'].count()],
+            'Multas': [df['MULT_FIN_WEB'].sum()]
+        })
+        resumen_d['Multas'] = resumen_d['Multas'].apply(lambda x: f"{x:,.2f}")
+
         resumen = df.groupby('UF').agg(
             Expedientes=('NUM_EXP', 'nunique'),
             Infracciones=('NUM_EXP', 'count'),
@@ -155,6 +162,27 @@ def mostrar_interfaz_uf(BD_RUIAS1):
         resumen['Multas'] = resumen['Multas'].apply(lambda x: f"{x:,.2f}")
 
         with output_tabla:
+           estilo_tabla = """
+              <style>
+              table {
+                  border-collapse: collapse;
+                  width: 100%;
+              }
+              thead {
+                  background-color: #44bfb5;
+                  color: white;
+              }
+              th {
+                  padding: 8px;
+                  text-align: right;
+              }
+              td {
+                  padding: 6px;
+              }
+              </style>
+              """
+            tabla_html = resumen_d.to_html(index=False)
+            display(HTML(estilo_tabla + tabla_html))
             display(resumen)
 
     # --- Interfaz completa ---
