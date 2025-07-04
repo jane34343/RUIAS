@@ -192,7 +192,7 @@ def mostrar_interfaz_total(BD_RUIAS1):
           display(HTML(estilo_tabla + tabla_html))
           display(HTML('<h3 style="color:#0BC7E0;">Resumen por Sector</h3>'))
           display(HTML(estilo_tabla + resumen_sect.to_html(index=False)))
-          display(HTML('<h4 style="color:#0BC7E0;">El total de expedientes incluye únicamente aquellos que están pendientes de apelación y que tienen carácter privado</h4>'))
+          display(HTML('<h4 style="color:#0BC7E0;">El total de expedientes incluye aquellos que están pendientes de apelación y que tienen carácter privado y público</h4>'))
 
 
     # --- Mostrar interfaz completa ---
