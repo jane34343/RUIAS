@@ -154,16 +154,19 @@ def mostrar_interfaz(BD_RUIAS1):
 
       resumen_sect = df.groupby('SECT').agg(
           Expedientes=('NUM_EXP', 'nunique'),
+          Infracciones=('NUM_EXP', 'count'),
           Multas=('MULT_FIN_WEB', 'sum')
       ).reset_index().rename(columns={'SECT': 'Sector'})
 
       resumen_rr = df.groupby('RR').agg(
           Expedientes=('NUM_EXP', 'nunique'),
+          Infracciones=('NUM_EXP', 'count'),
           Multas=('MULT_FIN_WEB', 'sum')
       ).reset_index().rename(columns={'RR': 'Recurso de Reconsideración'})
 
       resumen_rape = df.groupby('R_APE').agg(
           Expedientes=('NUM_EXP', 'nunique'),
+          Infracciones=('NUM_EXP', 'count'),
           Multas=('MULT_FIN_WEB', 'sum')
       ).reset_index().rename(columns={'R_APE': 'Recurso de Apelación'})
 
@@ -179,7 +182,7 @@ def mostrar_interfaz(BD_RUIAS1):
       }
       th {
           padding: 8px;
-          text-align: center;
+          text-align: left;
       }
       td {
           padding: 6px;
@@ -191,10 +194,10 @@ def mostrar_interfaz(BD_RUIAS1):
           display(HTML('<h3 style="color:#002060;">Resumen por Sector</h3>'))
           display(HTML(estilo_tabla + resumen_sect.to_html(index=False)))
 
-          display(HTML('<h3 style="color:#002060;">Resumen por Recurso de Reconsideración</h3>'))
+          display(HTML('<h3 style="color:#002060;">¿Tiene resolución de reconsideración?</h3>'))
           display(HTML(estilo_tabla + resumen_rr.to_html(index=False)))
 
-          display(HTML('<h3 style="color:#002060;">Resumen por Recurso de Apelación</h3>'))
+          display(HTML('<h3 style="color:#002060;">¿Tiene resolución de apelación?</h3>'))
           display(HTML(estilo_tabla + resumen_rape.to_html(index=False)))
 
 
