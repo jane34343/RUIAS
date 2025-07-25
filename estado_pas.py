@@ -144,7 +144,7 @@ def mostrar_interfaz(BD_PAS):
 
     output_tabla = widgets.Output()
 
-    def update_summary(ruc, uf, dpto, fecha_inicio_val, fecha_fin_val):
+def update_summary(ruc, uf, dpto, fecha_inicio_val, fecha_fin_val):
     nonlocal filtro_actual
     output_tabla.clear_output()
     df = BD_PAS.copy()
@@ -209,6 +209,7 @@ def mostrar_interfaz(BD_PAS):
         display(HTML(estilo_tabla + resumen_sect.to_html(index=False)))
         display(HTML('<h3 style="color:#E83670;">Tabla resumen por administrado</h3>'))
         display(resumen)
+
 
     filtros = widgets.VBox([
         widgets.HTML('<h2 style="color:#E83670;">📊 Tabla resumen por administrado</h2>'),
