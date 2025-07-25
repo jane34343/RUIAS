@@ -186,7 +186,8 @@ def mostrar_interfaz(BD_PAS):
         ).reset_index()
         
         with output_tabla:
-            estilo_tabla = """
+
+              estilo_tabla = """
               <style>
               table {
                   border-collapse: collapse;
