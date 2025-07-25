@@ -174,8 +174,40 @@ def mostrar_interfaz(BD_PAS):
             margins_name='Total'
         ).reset_index()
 
+         resumen_sect = pd.pivot_table(
+            df,
+            index='SECTOR',
+            columns='ESTADO_AUX',
+            values='ITEM',
+            aggfunc='nunique',
+            fill_value=0,
+            margins=True,
+            margins_name='Total'
+        ).reset_index()
+        
         with output_tabla:
-            display(HTML('<h3 style="color:#E83670;">Tabla resumen</h3>'))
+            estilo_tabla = """
+              <style>
+              table {
+                  border-collapse: collapse;
+                  width: 100%;
+              }
+              thead {
+                  background-color: #1d85bf;
+                  color: white;
+              }
+              th {
+                  padding: 8px;
+                  text-align: right;
+              }
+              td {
+                  padding: 6px;
+              }
+              </style>
+              """
+            display(HTML('<h3 style="color:#E83670;">Resumen por Sector</h3>'))
+            display(HTML(estilo_tabla + resumen_sect.to_html(index=False)))
+            display(HTML('<h3 style="color:#E83670;">Tabla resumen por administrado</h3>'))
             display(resumen)
 
     filtros = widgets.VBox([
