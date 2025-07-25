@@ -132,65 +132,70 @@ def mostrar_interfaz_total(BD_RUIAS1):
 
     # --- Función de filtrado y resumen ---
     def update_summary(ruc, uf, dpto, fecha_inicio_val, fecha_fin_val):
-        nonlocal filtro_actual
-        output_tabla.clear_output()
+    nonlocal filtro_actual
+    output_tabla.clear_output()
+    df = BD_PAS.copy()
 
-        df = BD_RUIAS1.copy()
+    if ruc:
+        df = df[df['RUC'].isin(ruc)]
+    if uf:
+        df = df[df['UNIDAD FISCALIZABLE'].isin(uf)]
+    if dpto:
+        df = df[df['DEPARTAMENTO'].isin(dpto)]
+    if fecha_inicio_val and fecha_fin_val:
+        df = df[
+            (df['INICIO DE SUPERVISION'].dt.date >= fecha_inicio_val) &
+            (df['INICIO DE SUPERVISION'].dt.date <= fecha_fin_val)
+        ]
 
-        if ruc:
-            df = df[df['NUM_DOC'].isin(ruc)]
-        if uf:
-            df = df[df['UF'].isin(uf)]
-        if dpto:
-            df = df[df['DPTO'].isin(dpto)]
-        if fecha_inicio_val and fecha_fin_val:
-            df = df[
-                (df['F_RESOL_RD'].dt.date >= fecha_inicio_val) &
-                (df['F_RESOL_RD'].dt.date <= fecha_fin_val)
-            ]
+    filtro_actual = df.copy()
 
-        filtro_actual = df.copy()
+    resumen = pd.pivot_table(
+        df,
+        index='ADMINISTRADO',
+        columns='ESTADO_AUX',
+        values='ITEM',
+        aggfunc='nunique',
+        fill_value=0,
+        margins=True,
+        margins_name='Total'
+    ).reset_index()
 
-        resumen = pd.DataFrame({
-            'Expedientes': [df['NUM_EXP'].nunique()],
-            'Infracciones': [df['NUM_EXP'].count()],
-            'Multas': [df['MULT_FIN_WEB'].sum()]
-        })
-        resumen['Multas'] = resumen['Multas'].apply(lambda x: f"{x:,.2f}")
-        
-        resumen_sect = df.groupby('SECT').agg(
-          Expedientes=('NUM_EXP', 'nunique'),
-          Infracciones=('NUM_EXP', 'count'),
-          Multas=('MULT_FIN_WEB', 'sum')
-        ).reset_index().rename(columns={'SECT': 'Sector'})
-        resumen_sect['Multas'] = resumen_sect['Multas'].apply(lambda x: f"{x:,.2f}")
+    resumen_sect = pd.pivot_table(
+        df,
+        index='SECTOR',
+        columns='ESTADO_AUX',
+        values='ITEM',
+        aggfunc='nunique',
+        fill_value=0,
+        margins=True,
+        margins_name='Total'
+    ).reset_index()
 
-        with output_tabla:
-          display(HTML('<h3 style="color:#144AA7;">Total de multas con recurso de reconsideración</h3>'))
-
-          estilo_tabla = """
-          <style>
-          table {
-              border-collapse: collapse;
-              width: 100%;
-          }
-          thead {
-              background-color: #1d85bf;
-              color: white;
-          }
-          th {
-              padding: 8px;
-              text-align: right;
-          }
-          td {
-              padding: 6px;
-          }
-          </style>
-          """
-          tabla_html = resumen.to_html(index=False)
-          display(HTML(estilo_tabla + tabla_html))
-          display(HTML('<h3 style="color:#144AA7;">Resumen por Sector</h3>'))
-          display(HTML(estilo_tabla + resumen_sect.to_html(index=False)))
+    with output_tabla:
+        estilo_tabla = """
+        <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        thead {
+            background-color: #1d85bf;
+            color: white;
+        }
+        th {
+            padding: 8px;
+            text-align: right;
+        }
+        td {
+            padding: 6px;
+        }
+        </style>
+        """
+        display(HTML('<h3 style="color:#E83670;">Resumen por Sector</h3>'))
+        display(HTML(estilo_tabla + resumen_sect.to_html(index=False)))
+        display(HTML('<h3 style="color:#E83670;">Tabla resumen por administrado</h3>'))
+        display(resumen)
 
 
 
