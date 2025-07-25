@@ -145,71 +145,70 @@ def mostrar_interfaz(BD_PAS):
     output_tabla = widgets.Output()
 
     def update_summary(ruc, uf, dpto, fecha_inicio_val, fecha_fin_val):
-        nonlocal filtro_actual
-        output_tabla.clear_output()
-        df = BD_PAS.copy()
+    nonlocal filtro_actual
+    output_tabla.clear_output()
+    df = BD_PAS.copy()
 
-        if ruc:
-            df = df[df['RUC'].isin(ruc)]
-        if uf:
-            df = df[df['UNIDAD FISCALIZABLE'].isin(uf)]
-        if dpto:
-            df = df[df['DEPARTAMENTO'].isin(dpto)]
-        if fecha_inicio_val and fecha_fin_val:
-            df = df[
-                (df['INICIO DE SUPERVISION'].dt.date >= fecha_inicio_val) &
-                (df['INICIO DE SUPERVISION'].dt.date <= fecha_fin_val)
-            ]
+    if ruc:
+        df = df[df['RUC'].isin(ruc)]
+    if uf:
+        df = df[df['UNIDAD FISCALIZABLE'].isin(uf)]
+    if dpto:
+        df = df[df['DEPARTAMENTO'].isin(dpto)]
+    if fecha_inicio_val and fecha_fin_val:
+        df = df[
+            (df['INICIO DE SUPERVISION'].dt.date >= fecha_inicio_val) &
+            (df['INICIO DE SUPERVISION'].dt.date <= fecha_fin_val)
+        ]
 
-        filtro_actual = df.copy()
+    filtro_actual = df.copy()
 
-        resumen = pd.pivot_table(
-            df,
-            index='ADMINISTRADO',
-            columns='ESTADO_AUX',
-            values='ITEM',
-            aggfunc='nunique',
-            fill_value=0,
-            margins=True,
-            margins_name='Total'
-        ).reset_index()
+    resumen = pd.pivot_table(
+        df,
+        index='ADMINISTRADO',
+        columns='ESTADO_AUX',
+        values='ITEM',
+        aggfunc='nunique',
+        fill_value=0,
+        margins=True,
+        margins_name='Total'
+    ).reset_index()
 
-        resumen_sect = pd.pivot_table(
-            df,
-            index='SECTOR',
-            columns='ESTADO_AUX',
-            values='ITEM',
-            aggfunc='nunique',
-            fill_value=0,
-            margins=True,
-            margins_name='Total'
-        ).reset_index()
-        
-        with output_tabla:
+    resumen_sect = pd.pivot_table(
+        df,
+        index='SECTOR',
+        columns='ESTADO_AUX',
+        values='ITEM',
+        aggfunc='nunique',
+        fill_value=0,
+        margins=True,
+        margins_name='Total'
+    ).reset_index()
 
-              estilo_tabla = """
-              <style>
-              table {
-                  border-collapse: collapse;
-                  width: 100%;
-              }
-              thead {
-                  background-color: #1d85bf;
-                  color: white;
-              }
-              th {
-                  padding: 8px;
-                  text-align: right;
-              }
-              td {
-                  padding: 6px;
-              }
-              </style>
-              """
-            display(HTML('<h3 style="color:#E83670;">Resumen por Sector</h3>'))
-            display(HTML(estilo_tabla + resumen_sect.to_html(index=False)))
-            display(HTML('<h3 style="color:#E83670;">Tabla resumen por administrado</h3>'))
-            display(resumen)
+    with output_tabla:
+        estilo_tabla = """
+        <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        thead {
+            background-color: #1d85bf;
+            color: white;
+        }
+        th {
+            padding: 8px;
+            text-align: right;
+        }
+        td {
+            padding: 6px;
+        }
+        </style>
+        """
+        display(HTML('<h3 style="color:#E83670;">Resumen por Sector</h3>'))
+        display(HTML(estilo_tabla + resumen_sect.to_html(index=False)))
+        display(HTML('<h3 style="color:#E83670;">Tabla resumen por administrado</h3>'))
+        display(resumen)
 
     filtros = widgets.VBox([
         widgets.HTML('<h2 style="color:#E83670;">📊 Tabla resumen por administrado</h2>'),
