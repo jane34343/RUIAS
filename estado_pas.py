@@ -174,7 +174,7 @@ def mostrar_interfaz(BD_PAS):
             margins_name='Total'
         ).reset_index()
 
-         resumen_sect = pd.pivot_table(
+        resumen_sect = pd.pivot_table(
             df,
             index='SECTOR',
             columns='ESTADO_AUX',
