@@ -181,7 +181,7 @@ def mostrar_interfaz(BD_PAS):
             fill_value=0,
             margins=True,
             margins_name='Total'
-        ).reset_index().rename(columns={'ESTADO_AUX': 'Estado'})
+        ).reset_index()
 
         resumen_sect = pd.pivot_table(
             df,
@@ -193,6 +193,7 @@ def mostrar_interfaz(BD_PAS):
             margins=True,
             margins_name='Total'
         ).reset_index()
+        resumen_sect.columns.name = None
 
         estilo_tabla = """
           <style>
