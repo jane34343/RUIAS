@@ -172,7 +172,8 @@ def mostrar_interfaz(BD_PAS):
             aggfunc='nunique',
             fill_value=0,
             margins=True,
-            margins_name='Total'
+            margins_name='Total',
+            observed=False
         ).reset_index().rename(columns={'ESTADO_AUX': 'Estado','ITEM': 'Expedientes'})
 
         resumen_ad = pd.pivot_table(
@@ -183,7 +184,8 @@ def mostrar_interfaz(BD_PAS):
             aggfunc='nunique',
             fill_value=0,
             margins=True,
-            margins_name='Total'
+            margins_name='Total',
+            observed=False
         ).reset_index()
 
         resumen_sect = pd.pivot_table(
@@ -194,7 +196,8 @@ def mostrar_interfaz(BD_PAS):
             aggfunc='nunique',
             fill_value=0,
             margins=True,
-            margins_name='Total'
+            margins_name='Total',
+            observed=False
         ).reset_index()
         resumen_sect.columns.name = None
 
