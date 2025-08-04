@@ -43,10 +43,10 @@ def mostrar_interfaz(BD_PAS):
     BD_PAS['ESTADO_AUX'] = pd.Categorical(BD_PAS['ESTADO_AUX'], categories=['EN EVALUCIÓN DE LA AUTORIDAD INSTRUCTORA', 'INICIADO','PAS PENDIENTE DE RESOLUCIÓN','EN TRÁMITE POR NULIDAD', 'RECONSIDERADO','APELACION','CONCLUIDO'], ordered=True)
 
     def limpiar_sector(texto):
-    if pd.isnull(texto):
-        return texto
-    texto = unicodedata.normalize('NFKD', texto).encode('ASCII', 'ignore').decode('utf-8')
-    return texto.upper()
+        if pd.isnull(texto):
+            return texto
+        texto = unicodedata.normalize('NFKD', texto).encode('ASCII', 'ignore').decode('utf-8')
+        return texto.upper()
 
     BD_PAS['SECTOR'] = BD_PAS['SECTOR'].apply(limpiar_sector)
 
