@@ -46,8 +46,9 @@ def mostrar_interfaz(BD_PAS):
             return texto
         texto = unicodedata.normalize('NFKD', texto).encode('ASCII', 'ignore').decode('utf-8')
         return texto.upper()
+        
 
-    BD_PAS.loc[:, 'ESTADO_AUX'] = pd.Categorical(
+    BD_PAS['ESTADO_AUX'] = pd.Categorical(
     BD_PAS['ESTADO_AUX'],
     categories=[
         'EN EVALUCIÓN DE LA AUTORIDAD INSTRUCTORA', 'INICIADO',
