@@ -39,6 +39,8 @@ def mostrar_interfaz(BD_PAS):
     ]
 
     BD_PAS = BD_PAS[BD_PAS["ESTADO_AUX"].isin(estados_filtrar)]
+    BD_PAS['ESTADO_AUX'] = pd.Categorical(BD_PAS['ESTADO_AUX'], categories=['EN EVALUCIÓN DE LA AUTORIDAD INSTRUCTORA', 'INICIADO','PAS PENDIENTE DE RESOLUCIÓN','EN TRÁMITE POR NULIDAD', 'RECONSIDERADO','APELACION','CONCLUIDO'], ordered=True)
+
 
     filtro_actual = pd.DataFrame()
 
