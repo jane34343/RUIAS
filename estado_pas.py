@@ -1,9 +1,9 @@
-
 import pandas as pd
 import ipywidgets as widgets
 from IPython.display import display, HTML
 import io
 import base64
+import unicodedata
 
 def mostrar_interfaz(BD_PAS):
     etapa_a_estado_aux = {
@@ -29,17 +29,39 @@ def mostrar_interfaz(BD_PAS):
     BD_PAS['RUC'] = BD_PAS['RUC'].astype(str)
 
     estados_filtrar = [
-        "CONCLUIDO",
         "EN EVALUCIÓN DE LA AUTORIDAD INSTRUCTORA",
+        "CONCLUIDO",
         "EN TRÁMITE POR NULIDAD",
         "INICIADO",
         "PAS PENDIENTE DE RESOLUCIÓN",
-        "RECONSIDERADO"
+        "RECONSIDERADO",
+        "APELACION"
     ]
 
     BD_PAS = BD_PAS[BD_PAS["ESTADO_AUX"].isin(estados_filtrar)]
 
+    def limpiar_sector(texto):
+        if pd.isnull(texto):
+            return texto
+        texto = unicodedata.normalize('NFKD', texto).encode('ASCII', 'ignore').decode('utf-8')
+        return texto.upper()
+
+    BD_PAS['ESTADO_AUX'] = pd.Categorical(
+        BD_PAS['ESTADO_AUX'],
+        categories=[
+            'EN EVALUCIÓN DE LA AUTORIDAD INSTRUCTORA', 'INICIADO',
+            'PAS PENDIENTE DE RESOLUCIÓN', 'EN TRÁMITE POR NULIDAD',
+            'RECONSIDERADO', 'APELACION', 'CONCLUIDO'
+        ],
+        ordered=True
+    )
+
+    BD_PAS.loc[:, 'SECTOR'] = BD_PAS['SECTOR'].apply(limpiar_sector)
+
     filtro_actual = pd.DataFrame()
+    resumen_general_global = pd.DataFrame()
+    resumen_ad_global = pd.DataFrame()
+    resumen_sect_global = pd.DataFrame()
 
     ruc_input = widgets.Text(
         placeholder='Buscar RUC...', 
@@ -122,30 +144,33 @@ def mostrar_interfaz(BD_PAS):
     fecha_inicio = widgets.DatePicker(description='Desde:', value=fecha_min, style={'description_width': 'initial'})
     fecha_fin = widgets.DatePicker(description='Hasta:', value=fecha_max, style={'description_width': 'initial'})
 
-    boton_descarga = widgets.Button(description="📥 Descargar base filtrada", button_style='success')
+    boton_descarga = widgets.Button(description="\ud83d\udcc5 Descargar Resumen Completo", button_style='success')
     output_descarga = widgets.Output()
 
     def descargar_excel(b):
-        if not filtro_actual.empty:
+        if not resumen_ad_global.empty:
             buffer = io.BytesIO()
-            filtro_actual.to_excel(buffer, index=False, engine='openpyxl')
+            with pd.ExcelWriter(buffer, engine='openpyxl') as writer:
+                resumen_general_global.to_excel(writer, index=False, sheet_name='Resumen General')
+                resumen_sect_global.to_excel(writer, index=False, sheet_name='Resumen por Sector')
+                resumen_ad_global.to_excel(writer, index=False, sheet_name='Resumen por Administrado')
             buffer.seek(0)
             encoded = base64.b64encode(buffer.read()).decode()
-            href = f'<a download="base_filtrada.xlsx" href="data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,{encoded}" target="_blank">📄 Descargar Excel</a>'
+            href = f'<a download="resumen_completo.xlsx" href="data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,{encoded}" target="_blank">\ud83d\udcc5 Descargar Resumen Completo</a>'
             with output_descarga:
                 output_descarga.clear_output()
                 display(HTML(href))
         else:
             with output_descarga:
                 output_descarga.clear_output()
-                print("⚠️ No hay datos filtrados para descargar.")
+                print("\u26a0\ufe0f No hay datos filtrados para descargar.")
 
     boton_descarga.on_click(descargar_excel)
 
     output_tabla = widgets.Output()
 
     def update_summary(ruc, uf, dpto, fecha_inicio_val, fecha_fin_val):
-        nonlocal filtro_actual
+        nonlocal filtro_actual, resumen_general_global, resumen_ad_global, resumen_sect_global
         output_tabla.clear_output()
         df = BD_PAS.copy()
 
@@ -163,7 +188,17 @@ def mostrar_interfaz(BD_PAS):
 
         filtro_actual = df.copy()
 
-        resumen = pd.pivot_table(
+        resumen_general = df.pivot_table(
+            index='ESTADO_AUX',
+            values='ITEM',
+            aggfunc='nunique',
+            fill_value=0,
+            margins=True,
+            margins_name='Total',
+            observed=False
+        ).reset_index().rename(columns={'ESTADO_AUX': 'Estado','ITEM': 'Expedientes'})
+
+        resumen_ad = pd.pivot_table(
             df,
             index='ADMINISTRADO',
             columns='ESTADO_AUX',
@@ -171,15 +206,57 @@ def mostrar_interfaz(BD_PAS):
             aggfunc='nunique',
             fill_value=0,
             margins=True,
-            margins_name='Total'
+            margins_name='Total',
+            observed=False
         ).reset_index()
 
+        resumen_sect = pd.pivot_table(
+            df,
+            index='SECTOR',
+            columns='ESTADO_AUX',
+            values='ITEM',
+            aggfunc='nunique',
+            fill_value=0,
+            margins=True,
+            margins_name='Total',
+            observed=False
+        ).reset_index()
+        resumen_sect.columns.name = None
+
+        resumen_general_global = resumen_general.copy()
+        resumen_ad_global = resumen_ad.copy()
+        resumen_sect_global = resumen_sect.copy()
+
+        estilo_tabla = """
+          <style>
+          table {
+              border-collapse: collapse;
+              width: 100%;
+          }
+          thead {
+              background-color: #E83670;
+              color: white;
+          }
+          th {
+              padding: 8px;
+              text-align: right;
+          }
+          td {
+              padding: 6px;
+          }
+          </style>
+          """
+
         with output_tabla:
-            display(HTML('<h3 style="color:#E83670;">Tabla resumen</h3>'))
-            display(resumen)
+            tabla_html = resumen_general.to_html(index=False)
+            display(HTML(estilo_tabla + tabla_html))
+            display(HTML('<h3 style="color:#E83670;">Resumen por Sector</h3>'))
+            display(HTML(estilo_tabla + resumen_sect.to_html(index=False)))
+            display(HTML('<h3 style="color:#E83670;">Resumen por Administrado</h3>'))
+            display(resumen_ad)
 
     filtros = widgets.VBox([
-        widgets.HTML('<h2 style="color:#E83670;">📊 Tabla resumen por administrado</h2>'),
+        widgets.HTML('<h2 style="color:#E83670;">\ud83d\udcca Resumen: Base STOCK </h2>'),
         widgets.HTML('<h3 style="color:#E83670;"> Filtros  </h3>'),
         widgets.HBox([ruc_input]),
         widgets.HBox([ruc_select]),
