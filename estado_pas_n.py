@@ -29,12 +29,13 @@ def mostrar_interfaz(BD_PAS):
     BD_PAS['RUC'] = BD_PAS['RUC'].astype(str)
 
     estados_filtrar = [
-        "CONCLUIDO",
         "EN EVALUCIÓN DE LA AUTORIDAD INSTRUCTORA",
+        "CONCLUIDO",
         "EN TRÁMITE POR NULIDAD",
         "INICIADO",
         "PAS PENDIENTE DE RESOLUCIÓN",
-        "RECONSIDERADO"
+        "RECONSIDERADO",
+        "APELACION"
     ]
 
     BD_PAS = BD_PAS[BD_PAS["ESTADO_AUX"].isin(estados_filtrar)]
