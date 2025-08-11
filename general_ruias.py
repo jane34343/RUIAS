@@ -159,6 +159,13 @@ def mostrar_interfaz(BD_RUIAS1):
       ).reset_index().rename(columns={'SECT': 'Sector'})
       resumen_sect['Multas'] = resumen_sect['Multas'].apply(lambda x: f"{x:,.2f}")
 
+      resumen_mf = df.groupby('TIPO_MULTA').agg(
+          Expedientes=('NUM_EXP', 'nunique'),
+          Infracciones=('NUM_EXP', 'count'),
+          Multas=('MULT_FIN_WEB', 'sum')
+      ).reset_index().rename(columns={'TIPO_MULTA': 'Multa firme'})
+      resumen_mf['Multas'] = resumen_mf['Multas'].apply(lambda x: f"{x:,.2f}")
+
       resumen_rr = df.groupby('RR').agg(
           Expedientes=('NUM_EXP', 'nunique'),
           Infracciones=('NUM_EXP', 'count'),
@@ -198,6 +205,9 @@ def mostrar_interfaz(BD_RUIAS1):
           display(HTML(estilo_tabla + resumen_sect.to_html(index=False)))
 
           display(HTML('<h3 style="color:#002060;">¿Tiene resolución de reconsideración?</h3>'))
+          display(HTML(estilo_tabla + resumen_mf.to_html(index=False)))
+
+          display(HTML('<h3 style="color:#002060;">¿Tiene resolución de reconsideración?</h3>'))
           display(HTML(estilo_tabla + resumen_rr.to_html(index=False)))
 
           display(HTML('<h3 style="color:#002060;">¿Tiene resolución de apelación?</h3>'))
@@ -232,3 +242,4 @@ def mostrar_interfaz(BD_RUIAS1):
     })
 
     display(filtros, interactiva, output_tabla)
+
