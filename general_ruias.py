@@ -204,7 +204,7 @@ def mostrar_interfaz(BD_RUIAS1):
           display(HTML('<h3 style="color:#002060;">Resumen por Sector</h3>'))
           display(HTML(estilo_tabla + resumen_sect.to_html(index=False)))
 
-          display(HTML('<h3 style="color:#002060;">¿Tiene resolución de reconsideración?</h3>'))
+          display(HTML('<h3 style="color:#002060;">Privacidad de la información</h3>'))
           display(HTML(estilo_tabla + resumen_mf.to_html(index=False)))
 
           display(HTML('<h3 style="color:#002060;">¿Tiene resolución de reconsideración?</h3>'))
@@ -242,4 +242,5 @@ def mostrar_interfaz(BD_RUIAS1):
     })
 
     display(filtros, interactiva, output_tabla)
+
 
